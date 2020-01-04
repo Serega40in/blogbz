@@ -5,8 +5,20 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import firebaseConfig from './config/firebase'
 import firebase from 'firebase'
+import VuetifyConfirm from 'vuetify-confirm'
 
 Vue.config.productionTip = false
+
+Vue.use(VuetifyConfirm, {
+  vuetify,
+  buttonTrueText: 'Да',
+  buttonFalseText: 'Нет',
+  color: 'warning',
+  icon: 'warning',
+  title: 'Warning',
+  width: 350,
+  property: '$confirm'
+})
 
 firebase.initializeApp(firebaseConfig)
 firebase.analytics()
