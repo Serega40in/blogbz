@@ -43,7 +43,7 @@
                                     type="password"
                                     aria-required="true"
                                     v-model="password"
-                                    rules="passwordRules"
+                                    :rules="passwordRules"
                             />
                         </v-form>
                     </v-card-text>

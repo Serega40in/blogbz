@@ -96,7 +96,11 @@
         },
         methods: {
             signout() {
-                this.$store.dispatch('SIGNOUT')
+                this.$confirm('Вы действительно хотите выйти?').then(res => {
+                    if (res)
+                        this.$store.dispatch('SIGNOUT')
+                })
+
             }
         }
     }

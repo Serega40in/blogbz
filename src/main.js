@@ -12,12 +12,7 @@ Vue.config.productionTip = false
 Vue.use(VuetifyConfirm, {
   vuetify,
   buttonTrueText: 'Да',
-  buttonFalseText: 'Нет',
-  color: 'warning',
-  icon: 'warning',
-  title: 'Warning',
-  width: 350,
-  property: '$confirm'
+  buttonFalseText: 'Нет'
 })
 
 firebase.initializeApp(firebaseConfig)
