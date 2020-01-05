@@ -5,7 +5,7 @@
                 <book-part-content :part="part"></book-part-content>
             </v-flex>
             <v-flex xs12 sm10 offset-sm1>
-                <!--<book-part-words :words="part.words"></book-part-words>-->
+                <book-part-words :words="part.words"></book-part-words>
             </v-flex>
         </v-layout>
     </v-container>
@@ -13,6 +13,8 @@
 
 <script>
     import BookPartContent from '../components/BookPartContent'
+    import BookPartWords from '../components/BookPartWords'
+    import Vue from 'vue'
     export default {
         props: {
             "bookId": {
@@ -26,16 +28,30 @@
         },
         data(){
             return {
+                part: null
             }
         },
         computed: {
-            part() {
+/*            part() {
                 let val = this.$store.getters.getParts.find(b => b.bookId == this.bookId && b.bookPartId == this.partId)
                 return val
-            }
+            }*/
+        },
+        created() {
+            Vue.$db.collection('BookParts')
+                .where('bookId','==',this.bookId)
+                .where('bookPartId','==',this.partId)
+            .get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(s => {
+                    this.part = s.data()
+                })
+            })
+            .catch()
         },
         components: {
-            BookPartContent
+            BookPartContent,
+            BookPartWords
         }
     }
 </script>

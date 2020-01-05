@@ -1,8 +1,9 @@
+import Vue from 'vue'
 
 export default {
     state: {
-        books:[
-            {
+        books:[],
+           /* {
                 id: 'asjdflkjasdf',
                 title: 'Harry Potter 1',
                 description: 'Первая глава первой книги о Гарри Поттере',
@@ -98,8 +99,8 @@ export default {
                     }
                 ]
             }
-        ],
-        bookParts:[
+        ],*/
+ /*       bookParts:[
             {
                 bookId: 'asjdflkjasdf',
                 bookPartId: 'fa;djf;a;lkjvxcv',
@@ -167,15 +168,54 @@ export default {
                     }
                 ]
             }
-        ]
+        ]*/
     },
     mutations: {
         SET_BOOKS(state, payload) {
             state.books = payload
         }
     },
+    actions: {
+      LOAD_BOOKS({commit}){
+        Vue.$db.collection('books')
+            .get()
+            .then(querySnapshot => {
+                let books = []
+                querySnapshot.forEach(s => {
+                    const data = s.data()
+                    let book = {
+                        id: s.id,
+                        title: data.title,
+                        description: data.description,
+                        imageUrl: data.imageUrl,
+                        level: data.level.slice(),
+                        youtube_play_list_id: data.youtube_play_list_id,
+                        parts: data.parts
+                    }
+                    let parts = []
+                    if(data.parts){
+                        data.parts.forEach(p => {
+                            let part = {
+                                id: p.id,
+                                title: p.title,
+                                youtube_id: p.youtube_id
+                            }
+
+                            parts.push(part)
+                        })
+                    }
+
+                    books.parts = parts
+
+                    books.push(book)
+
+                })
+                commit('SET_BOOKS',books)
+            })
+            .catch()
+      }
+    },
     getters: {
-        getBooks: (state) => state.books,
-        getParts: (state) => state.bookParts
+        getBooks: (state) => state.books
     }
 }

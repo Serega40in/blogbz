@@ -5,6 +5,7 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import firebaseConfig from './config/firebase'
 import firebase from 'firebase'
+import 'firebase/firestore'
 import VuetifyConfirm from 'vuetify-confirm'
 import VueYouTubeEmbed from 'vue-youtube-embed'
 
@@ -18,7 +19,11 @@ Vue.use(VuetifyConfirm, {
   buttonFalseText: 'Нет'
 })
 
-firebase.initializeApp(firebaseConfig)
+const firebaseApp = firebase.initializeApp(firebaseConfig)
+const db = firebaseApp.firestore()
+
+Vue.$db = db
+
 firebase.analytics()
 
 new Vue({
@@ -31,5 +36,6 @@ new Vue({
     firebase.auth().onAuthStateChanged(function(user) {
         vm.$store.dispatch('STATE_CHANGED', user)
     });
+    this.$store.dispatch('LOAD_BOOKS')
   }
 }).$mount('#app')
