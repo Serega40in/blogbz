@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Books from '../views/Books'
+import Book from '../views/Book'
+import BookPart from '../views/BookPart'
 import Words from '../views/Words'
 import Signin from "../views/Signin";
 import Signup from "../views/Signup";
@@ -20,6 +22,18 @@ const routes = [
     path: '/books',
     name: 'books',
     component: Books
+  },
+  {
+    path: '/book/:id',
+    name: 'book',
+    props: true,
+    component: Book
+  },
+  {
+    path: '/book/:bookId/part/:partId',
+    name: 'bookPart',
+    props: true,
+    component: BookPart
   },
   {
     path: '/words',

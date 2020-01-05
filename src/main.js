@@ -6,8 +6,11 @@ import vuetify from './plugins/vuetify'
 import firebaseConfig from './config/firebase'
 import firebase from 'firebase'
 import VuetifyConfirm from 'vuetify-confirm'
+import VueYouTubeEmbed from 'vue-youtube-embed'
 
 Vue.config.productionTip = false
+
+Vue.use(VueYouTubeEmbed)
 
 Vue.use(VuetifyConfirm, {
   vuetify,
